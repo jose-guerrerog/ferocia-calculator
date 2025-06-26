@@ -12,6 +12,7 @@ import {
   FormControl,
 } from "@mui/material";
 
+import { calculateFinalBalance } from "../lib/calculator";
 import { Frequency } from "../types";
 import { INTEREST_FREQUENCIES } from "../constants";
 
@@ -21,9 +22,25 @@ export default function Home() {
   const [term, setTerm] = useState(0);
   const [frequency, setFrequency] = useState(Frequency.MATURITY)
 
+  const [result, setResult] = useState<number | null>(null);
+
+  const handleCalculate = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!amount || !rate || !term) {
+      return;
+    }
+    const final = calculateFinalBalance(
+      amount,
+      rate,
+      term,
+      frequency
+    );
+    setResult(final);
+  };
+
   return (
     <Box component="div" maxWidth={600} margin="auto">
-      <Box component="form">
+      <Box component="form" onSubmit={handleCalculate}>
         <Typography variant="h4" gutterBottom>
           Ferocia Calculator
         </Typography>
@@ -70,6 +87,11 @@ export default function Home() {
           </Button>
         </Box>
       </Box>
+      {result && (
+        <Typography variant="h6" sx={{ mt: 2 }}>
+          Final Balance: ${result}
+        </Typography>
+      )}
     </Box>
   );
 }
