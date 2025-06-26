@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 import { calculateFinalBalance } from "../lib/calculator";
-import { Frequency, TermDepositForm } from "../types";
+import { Frequency, TermDepositForm, TermDepositInput } from "../types";
 import { INITIAL_VALUES, INTEREST_FREQUENCIES } from "../constants";
 
 export default function Home() {
@@ -29,7 +29,7 @@ export default function Home() {
 
   const isBtnDisabled = !form.amount || !form.rate || !form.term;
 
-  const handleNumericChange = (key: "amount" | "rate" | "term") => 
+  const handleNumericChange = (key: TermDepositInput) => 
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
       setForm((prev) => ({ ...prev, [key]: value === "" ? "" : parseFloat(value)  }));
