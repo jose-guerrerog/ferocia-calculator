@@ -23,7 +23,7 @@ Where:
 - **n** = Number of compounding periods per year (based on frequency)
 - **t** = Term in years
 
-If "Interest Paid" is set to **maturity**, the calculator uses **simple interest rate** instead.
+If "Interest Paid" is set to **maturity**, the calculator uses **simple interest** (not compounding during the term).
 
 ---
 
