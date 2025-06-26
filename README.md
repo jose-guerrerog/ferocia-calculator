@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ferocia Calculator
+
+A simple compound interest calculator built with **Next.js**, **TypeScript**, and **Material UI**.
+
+## Tech Stack
+
+- **Framework**: Next.js (App Router, TypeScript)
+- **UI**: MUI (Material UI)
+- **Testing**: Jest, React Testing Library
+
+---
+
+## How It Works
+
+The app uses the compound interest formula:
+
+A = P × (1 + r/n)^(nt)
+
+Where:
+- **A** = Final amount
+- **P** = Start amount
+- **r** = Annual interest rate (decimal)
+- **n** = Number of compounding periods per year (based on frequency)
+- **t** = Term in years
+
+If "Interest Paid" is set to **maturity**, the calculator uses **simple interest rate** instead.
+
+---
 
 ## Getting Started
 
-First, run the development server:
+Follow the steps below to run the project locally:
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/jose-guerrerog/ferocia-calculator.git
+cd ferocia-calculator
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Running Tests
 
-## Learn More
+```bash
+npm test
+```
 
-To learn more about Next.js, take a look at the following resources:
+Tests are located in `src/__tests__/` and cover both the interest calculation logic and UI rendering.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployed Version
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+You can try the live version here:  
+👉 [https://ferocia-calculator.vercel.app](https://ferocia-calculator.vercel.app)
