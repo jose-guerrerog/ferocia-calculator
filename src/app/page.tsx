@@ -10,30 +10,45 @@ import {
   Box,
   InputLabel,
   FormControl,
+  SelectChangeEvent,
 } from "@mui/material";
 
 import { calculateFinalBalance } from "../lib/calculator";
-import { Frequency } from "../types";
-import { INTEREST_FREQUENCIES } from "../constants";
+import { Frequency, TermDepositForm } from "../types";
+import { INITIAL_VALUES, INTEREST_FREQUENCIES } from "../constants";
 
 export default function Home() {
-  const [amount, setAmount] = useState(0);
-  const [rate, setRate] = useState(0);
-  const [term, setTerm] = useState(0);
-  const [frequency, setFrequency] = useState(Frequency.MATURITY)
+  const [form, setForm] = useState<TermDepositForm>({
+    amount: INITIAL_VALUES.capital,
+    rate: INITIAL_VALUES.rate,
+    term: INITIAL_VALUES.term,
+    frequency: Frequency.MATURITY,
+  });
 
   const [result, setResult] = useState<number | null>(null);
 
+  const isBtnDisabled = !form.amount || !form.rate || !form.term;
+
+  const handleNumericChange = (key: "amount" | "rate" | "term") => 
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+      setForm((prev) => ({ ...prev, [key]: value === "" ? "" : parseFloat(value)  }));
+    };
+  
+  const handleFrequencyChange = (e: SelectChangeEvent) => {
+    setForm((prev) => ({ ...prev, frequency: e.target.value as Frequency }));
+  };
+
   const handleCalculate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!amount || !rate || !term) {
+    if (!form.amount || !form.rate || !form.term) {
       return;
     }
     const final = calculateFinalBalance(
-      amount,
-      rate,
-      term,
-      frequency
+      form.amount,
+      form.rate,
+      form.term,
+      form.frequency
     );
     setResult(final);
   };
@@ -49,31 +64,31 @@ export default function Home() {
           <TextField
             label="Start Amount ($)"
             type="number"
-            value={amount}
-            onChange={(e) => setAmount(parseFloat(e.target.value))}
+            value={form.amount}
+            onChange={handleNumericChange("amount")}
             fullWidth
           />
           <TextField
             label="Interest Rate (%)"
             type="number"
-            value={rate}
-            onChange={(e) => setRate(parseFloat(e.target.value))}
+            value={form.rate}
+            onChange={handleNumericChange("rate")}
             fullWidth
           />
           <TextField
             label="Term (years)"
             type="number"
-            value={term}
-            onChange={(e) => setTerm(parseFloat(e.target.value))}
+            value={form.term}
+            onChange={handleNumericChange("term")}
             fullWidth
           />
           <FormControl fullWidth>
             <InputLabel id="frequency-label">Frequency</InputLabel>
             <Select
               labelId="frequency-label"
-              value={frequency}
-              label="Interest Paid"
-              onChange={() => {}}
+              value={form.frequency}
+              label="Frequency"
+              onChange={handleFrequencyChange} 
             >
               {INTEREST_FREQUENCIES.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -82,7 +97,7 @@ export default function Home() {
               ))}
             </Select>
           </FormControl>
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="contained" disabled={isBtnDisabled}>
             Calculate
           </Button>
         </Box>
